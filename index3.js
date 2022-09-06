@@ -28,8 +28,11 @@ var myInterface = readline.createInterface({
 
 myInterface.question(`Enter the number: `, x => {
   console.log(`${fib(x-1)}`);
-
-
+var csvHeaders = "input,ouput\n"
+csvHeaders =fs.writeFileSync("data.csv",csvHeaders,(err) =>{
+    
+  // console.log('header')
+})
 var data = fs.readFileSync("data.csv").toLocaleString();
     arr.push(data);
     if (f==0)
@@ -37,19 +40,18 @@ var data = fs.readFileSync("data.csv").toLocaleString();
         console.log("here")
         // arr.push(`${x},${fib(x-1)}`)
         var tempObj = {
-          input : `${x}`,
+          input : `"${x}"`,
           ouput : `${fib(x-1)}\n`
         };
-        const propertyName  = Object.entries(tempObj);
-        console.log( "**"+propertyName);
-        
+        const propertyName  = Object.values(tempObj);
+        console.log("**"+propertyName);
+        const csvHeaders = Object.keys(tempObj);
+        // console.log(csvHeaders);
+        // arr.push(csvHeaders);
         arr.push(propertyName);
-        console.log(arr);
-        
         console.log(propertyName);
-        // const arr2 =new Map();
-        // arr2.set(`${x},${fib(x-1)}`)
-        // console.log(arr2 + "arr2")
+        console.log(arr);
+    
         fs.writeFileSync("data.csv",arr,"utf-8",(err)=>{
             if (!err) {
                 console.log("Data Added");
