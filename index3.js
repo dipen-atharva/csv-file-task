@@ -2,15 +2,15 @@ const readline = require('readline');
 const fs = require('fs');
 
 
-var arr=[]
+var arr = [];
 
     
 // *****************Fib func****************
 var fib = function(n) {
-    if (n === 0) {
+    if ( n === 0 )  {
       return [0];
     }
-    if (n === 1) {
+    if ( n === 1 ) {
       return [0, 1];
     } else {
       var arr = fib(n - 1);
@@ -29,9 +29,8 @@ var myInterface = readline.createInterface({
 myInterface.question(`Enter the number: `, x => {
   console.log(`${fib(x-1)}`);
 var csvHeaders = "input,ouput\n"
-csvHeaders =fs.writeFileSync("data.csv",csvHeaders,(err) =>{
-    
-  // console.log('header')
+csvHeaders =fs.appendFile("data.csv",csvHeaders,() =>{
+  console.log('header')
 })
 var data = fs.readFileSync("data.csv").toLocaleString();
     arr.push(data);
@@ -45,19 +44,28 @@ var data = fs.readFileSync("data.csv").toLocaleString();
         };
         const propertyName  = Object.values(tempObj);
         console.log("**"+propertyName);
-        const csvHeaders = Object.keys(tempObj);
+        // const csvHeaders = Object.keys(tempObj);
         // console.log(csvHeaders);
         // arr.push(csvHeaders);
         arr.push(propertyName);
         console.log(propertyName);
-        console.log(arr);
+        console.log("**" + arr);
     
-        fs.writeFileSync("data.csv",arr,"utf-8",(err)=>{
-            if (!err) {
-                console.log("Data Added");
-            }
-            else console.log(err);
-        })
+        // fs.writeFileSync("data.csv",arr,"utf-8",(err)=>{
+        //     if (!err) {
+        //         console.log("Data Added");
+        //         ; 
+        //     }
+        //     else console.log(err);
+        // })
+        
+        for(let i = 1 ; i < arr.length ; i++ ) {
+
+          fs.appendFile("data.csv",arr[i], "utf-8", () => {
+            console.log("Log data added!");
+          });
+        }
+          
     }
 
 

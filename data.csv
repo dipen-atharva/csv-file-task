@@ -1,1 +1,8 @@
-undefined
+input,ouput
+"1",0
+input,ouput
+"2",0,1
+input,ouput
+"3",0,1,1
+input,ouput
+"5",0,1,1,2,3
