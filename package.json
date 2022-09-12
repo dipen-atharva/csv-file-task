@@ -1,0 +1,15 @@
+{
+  "name": "task",
+  "version": "1.0.0",
+  "description": "task without using third party api's.",
+  "main": "index.js",
+  "dependencies": {
+    "node": "^16.17.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dipen",
+  "license": "ISC"
+}
