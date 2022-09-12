@@ -2,6 +2,12 @@ const rl = require('readline');
 const fs = require('fs');
 
 var arr = [] ;
+var f=0;
+
+var myInterface = rl.createInterface ({
+    input: process.stdin,
+    output: process.stdout,
+});
 
 // fib function
 var fib = function(n) {
@@ -16,13 +22,9 @@ var fib = function(n) {
       return arr;
     }
   };
+  
 
-var myInterface = rl.createInterface ({
-    input: process.stdin,
-    output: process.stdout,
-});
-
-var f=0;
+// readline question
 myInterface.question(`Enter the number: `, x => {
     console.log(`${fib(x-1)} + "Interface Output" ` );
 
@@ -31,12 +33,21 @@ myInterface.question(`Enter the number: `, x => {
       });
 
     reader.on("line", (row) => {
-      arr.push(row.split(","));
+        
+        // row[0] = "INPUT,OUTPUT\r\n";
+        // console.log(row[0]);
+
+        arr.push(row.split(","));
     });
     reader.on("close", () => {
 
         console.log(arr);
-        for (let i = 0; i < arr.length; i++) {
+        if (arr[0] != "INPUT,OUTPUT") {
+            arr.unshift("INPUT,OUTPUT")   
+        }
+        // Ignoring duplicate entries
+        for (let i = 1; i < arr.length; i++) {
+
             if ( arr[i][0] == `${x}`) {
                 f = 1;
                 break;
@@ -46,7 +57,10 @@ myInterface.question(`Enter the number: `, x => {
             arr.push(`${x},${fib(x-1)}`);
         }
 
+        // writestream 
         const stream = fs.createWriteStream("data.csv");
+
+        // stream.write('INPUT,OUTPUT\r\n')
         for (let i of arr) { 
             stream.write(i + "\r\n"); 
         }
