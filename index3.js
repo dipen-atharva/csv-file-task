@@ -21,53 +21,52 @@ var fib = function(n) {
   
 //   console.log(fib(8));
 var f=0;
-var myInterface = readline.createInterface({
+var myInterface = readline.createInterface ({
   input: process.stdin,
   output: process.stdout,
 });
 
+// Interface Question
 myInterface.question(`Enter the number: `, x => {
-  console.log(`${fib(x-1)}`);
-var csvHeaders = "input,ouput\n"
-csvHeaders =fs.appendFile("data.csv",csvHeaders,() =>{
-  console.log('header')
-})
-var data = fs.readFileSync("data.csv").toLocaleString();
-    arr.push(data);
-    if (f==0)
-    {
-        console.log("here")
-        // arr.push(`${x},${fib(x-1)}`)
-        var tempObj = {
-          input : `"${x}"`,
-          ouput : `${fib(x-1)}\n`
-        };
-        const propertyName  = Object.values(tempObj);
-        console.log("**"+propertyName);
-        // const csvHeaders = Object.keys(tempObj);
-        // console.log(csvHeaders);
-        // arr.push(csvHeaders);
-        arr.push(propertyName);
-        console.log(propertyName);
-        console.log("**" + arr);
-    
-        // fs.writeFileSync("data.csv",arr,"utf-8",(err)=>{
-        //     if (!err) {
-        //         console.log("Data Added");
-        //         ; 
-        //     }
-        //     else console.log(err);
-        // })
-        
-        for(let i = 1 ; i < arr.length ; i++ ) {
+  console.log(`${fib(x-1)} + "Interface Output" ` );
 
-          fs.appendFile("data.csv",arr[i], "utf-8", () => {
-            console.log("Log data added!");
-          });
-        }
+  // csv header
+  var csvHeaders = "input,ouput\n"
+  csvHeaders =fs.appendFile("data.csv",csvHeaders,() => {
+    console.log('header');
+    
+  })
+  
+  var data = fs.readFileSync("data.csv").toLocaleString();
+  
+    // somthing here
+    arr.push(data);
+    if ( f == 0 ) {
+
+      // console.log("here")
+      // arr.push(`${x},${fib(x-1)}`)
+      var tempObj = {
+        input : `"${x}"`,
+        ouput : `${fib(x-1)}\n`
+      };
+
+      const propertyName  = Object.values(tempObj);
+      console.log("1propname "+ propertyName);
+      arr.push(propertyName);
+      console.log("2propname " + propertyName);
+      console.log("arr" + arr);
+    
+      for(let i = 1 ; i < arr.length ; i++ ) {
+
+        fs.appendFile("data.csv",arr[i], "utf-8", () => {
+          console.log("Log data added!");
+        });
+
+      }
+        
           
     }
 
-
-  myInterface.close();
+    myInterface.close();
 });
+
