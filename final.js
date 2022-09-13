@@ -33,21 +33,19 @@ myInterface.question(`Enter the number: `, x => {
       });
 
     reader.on("line", (row) => {
-        
-        // row[0] = "INPUT,OUTPUT\r\n";
-        // console.log(row[0]);
-
-        arr.push(row.split(","));
+      arr.push(row.split(","));
     });
-    reader.on("close", () => {
 
+    reader.on("close", () => {
         console.log(arr);
+
+        // Setting header 
         if (arr[0] != "INPUT,OUTPUT") {
             arr.unshift("INPUT,OUTPUT")   
         }
+
         // Ignoring duplicate entries
         for (let i = 1; i < arr.length; i++) {
-
             if ( arr[i][0] == `${x}`) {
                 f = 1;
                 break;
@@ -57,19 +55,16 @@ myInterface.question(`Enter the number: `, x => {
             arr.push(`${x},${fib(x-1)}`);
         }
 
-        // writestream 
+        // Writestream 
         const stream = fs.createWriteStream("data.csv");
 
-        // stream.write('INPUT,OUTPUT\r\n')
         for (let i of arr) { 
             stream.write(i + "\r\n"); 
         }
-        console.log("arr :-"+ arr);
         
+        console.log("arr :-"+ arr);
         stream.end(); 
 
-
-      });
-      
+      });  
     myInterface.close();
 });
