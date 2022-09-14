@@ -1,9 +1,7 @@
-
 const rl = require('readline');
 const fs = require('fs');
 
 var arr = [] ;
-// var f=0;
 
 var myInterface = rl.createInterface ({
     input: process.stdin,
@@ -24,9 +22,11 @@ var fib = function(n) {
     }
   };
   
-
+  
 // readline question
-myInterface.question(`Enter the number: `, x => {
+myInterface.question(`Enter the number: `, function interface(x) {
+  
+ 
     console.log(`${fib(x-1)} + "Interface Output" ` );
 
     const reader = rl.createInterface({
@@ -42,21 +42,31 @@ myInterface.question(`Enter the number: `, x => {
       }
       for (let i = 1; i < arr.length; i++) {
         if ( arr[i][0] == `${x}`) {
-            return;
-          } 
-
+          console.log("line return");
+            return ;
+        } 
       }
     });
 
     reader.on("close", () => {
         
         // Ignoring duplicate entries
-        for (let i = 1; i < arr.length; i++) {
-            if ( arr[i][0] == `${x}`) {
-                return;
-              } 
+        // for (let i = 1; i < arr.length; i++) {
+        //     if ( arr[i][0] == `${x}`) {
+        //       console.log("close return")
+        //       return;
+        //       } 
+        // }
+        // arr.find((value,i) => {
+        //   if(value[i] == `${x}`){
+        //     console.log(value[i]);
+        //     console.log("close return");
+        //     return;
+        //   }
+        // })
+        if(!arr.includes(`${x},${fib(x-1)}`)){
+          arr.push(`${x},${fib(x-1)}`);
         }
-        arr.push(`${x},${fib(x-1)}`);
         
        
         // Writestream 
