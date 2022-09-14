@@ -35,44 +35,30 @@ myInterface.question(`Enter the number: `, x => {
 
     reader.on("line", (row) => {
       arr.push(row.split(","));
+
+      // Setting header 
+      if (arr[0] != "INPUT,OUTPUT") {
+        arr.unshift("INPUT,OUTPUT")   
+      }
+      for (let i = 1; i < arr.length; i++) {
+        if ( arr[i][0] == `${x}`) {
+            return;
+          } 
+
+      }
     });
 
     reader.on("close", () => {
-        // console.log(arr);
-
-        // Setting header 
-        if (arr[0] != "INPUT,OUTPUT") {
-            arr.unshift("INPUT,OUTPUT")   
-        }
-
-        // Ignoring duplicate entries
-
-        console.log("start");
         
-        console.log("after start " + [arr]);
-        // arr.push(`${x},${fib(x-1)}`);
+        // Ignoring duplicate entries
         for (let i = 1; i < arr.length; i++) {
             if ( arr[i][0] == `${x}`) {
-                console.log("i value" + arr[i][0]);
-                console.log("XXX" + `${x}`);
-                arr.push(`${x},${fib(x-1)}`);
-                console.log("push worked");
-                console.log("inbetween"); 
-                
-              }  
-              else{
-                console.log("else");
-                break;
-                  // arr.push(`${x},${fib(x-1)}`);
-                }  
-
+                return;
+              } 
         }
-        // arr.push(`${x},${fib(x-1)}`);
-        console.log("stop");
-        // if( f == 0) {
-        //     arr.push(`${x},${fib(x-1)}`);
-        // }
-                  
+        arr.push(`${x},${fib(x-1)}`);
+        
+       
         // Writestream 
         const stream = fs.createWriteStream("data.csv");
         
