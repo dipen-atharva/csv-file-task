@@ -27,7 +27,7 @@ var fib = function(n) {
 myInterface.question(`Enter the number: `, function interface(x) {
   
  
-    console.log(`${fib(x-1)} + "Interface Output" ` );
+    console.log( `${fib(x-1)} + "Interface Output" ` );
 
     const reader = rl.createInterface({
         input: fs.createReadStream("data.csv") 
@@ -35,22 +35,17 @@ myInterface.question(`Enter the number: `, function interface(x) {
 
     reader.on("line", (row) => {
       arr.push(row.split(","));
+      
+      
+      console.log(row);
+      if(row == `${x},${fib(x-1)}`){
+        console.log("Duplicate Entry Found");
+        reader.removeAllListeners();
+      }
 
       // Setting header 
       if (arr[0] != "INPUT,OUTPUT") {
-        arr.unshift("INPUT,OUTPUT")   
-      }
-
-      console.log(arr);
-      console.log("length " + arr.length);
-      for (let i = 1; i < arr.length; i++) {
-        if ( arr[i][0] == `${x}`) {
-          console.log(i);
-          console.log(arr[i][0] + ` - ${x}`);
-          console.log("line return");
-          return  ;
-        } 
-        // return ;
+        arr.unshift("INPUT,OUTPUT")
       }
 
     });
