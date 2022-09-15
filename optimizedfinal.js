@@ -11,13 +11,13 @@ var myInterface = rl.createInterface ({
 // fib function
 var fib = function(n) {
     if ( n === 0 )  {
-      return [0];
+      return ['0'];
     }
     if ( n === 1 ) {
-      return [0, 1];
+      return ['0', '1'];
     } else {
       var arr = fib(n - 1);
-      arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+      arr.push( (+arr[arr.length - 1] + +arr[arr.length - 2]).toString());
       return arr;
     }
   };
@@ -40,12 +40,19 @@ myInterface.question(`Enter the number: `, function interface(x) {
       if (arr[0] != "INPUT,OUTPUT") {
         arr.unshift("INPUT,OUTPUT")   
       }
+
+      console.log(arr);
+      console.log("length " + arr.length);
       for (let i = 1; i < arr.length; i++) {
         if ( arr[i][0] == `${x}`) {
+          console.log(i);
+          console.log(arr[i][0] + ` - ${x}`);
           console.log("line return");
-            return ;
+          return  ;
         } 
+        // return ;
       }
+
     });
 
     reader.on("close", () => {
@@ -57,24 +64,19 @@ myInterface.question(`Enter the number: `, function interface(x) {
         //       return;
         //       } 
         // }
-        // arr.find((value,i) => {
-        //   if(value[i] == `${x}`){
-        //     console.log(value[i]);
-        //     console.log("close return");
-        //     return;
-        //   }
-        // })
-        if(!arr.includes(`${x},${fib(x-1)}`)){
-          arr.push(`${x},${fib(x-1)}`);
-        }
-        
+        // arr.push(`${x},${fib(x-1)}`);
+      
+        if(!arr.find((i) => JSON.stringify(i) === JSON.stringify([x,...fib(x-1)]))){
+          arr.push([x, fib(x-1).toString()].toString());
+        } else {
+          console.log("close else")
+          return ;
+        }      
        
         // Writestream 
         const stream = fs.createWriteStream("data.csv");
         
-        for (let i of arr) { 
-          stream.write(i + "\r\n"); 
-        }
+        stream.write(arr.join("\r\n")); 
         
         console.log("arr :-"+ arr);
         stream.end(); 
