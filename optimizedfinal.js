@@ -9,45 +9,40 @@ var myInterface = rl.createInterface ({
 });
 
 // fib function
-var fib = function(n) {
+var fib = function( n ) {
     if ( n === 0 )  {
       return ['0'];
     }
     if ( n === 1 ) {
       return ['0', '1'];
     } else {
-      var arr = fib(n - 1);
+      var arr = fib( n - 1 );
       arr.push( (+arr[arr.length - 1] + +arr[arr.length - 2]).toString());
       return arr;
     }
-  };
+};
   
   
 // readline question
 myInterface.question(`Enter the number: `, function interface(x) {
-  
- 
-    console.log( `${fib(x-1)} + "Interface Output" ` );
 
     const reader = rl.createInterface({
         input: fs.createReadStream("data.csv") 
       });
 
-    reader.on("line", (row) => {
-      arr.push(row.split(","));
+    reader.on( "line", ( row ) => {
+      arr.push( row.split( "," ) );
       
-      
-      console.log(row);
-      if(row == `${x},${fib(x-1)}`){
+      // console.log(row);
+      if( row == `${x},${fib(x-1)}` ) {
         console.log("Duplicate Entry Found");
         reader.removeAllListeners();
       }
 
       // Setting header 
-      if (arr[0] != "INPUT,OUTPUT") {
+      if ( arr[0] != "INPUT,OUTPUT" ) {
         arr.unshift("INPUT,OUTPUT")
       }
-
     });
 
     reader.on("close", () => {
@@ -70,12 +65,9 @@ myInterface.question(`Enter the number: `, function interface(x) {
        
         // Writestream 
         const stream = fs.createWriteStream("data.csv");
-        
         stream.write(arr.join("\r\n")); 
-        
-        console.log("arr :-"+ arr);
+        // console.log("arr :-"+ arr);
         stream.end(); 
-
-      });  
+    });  
     myInterface.close();
 });
